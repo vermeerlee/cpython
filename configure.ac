@@ -1012,20 +1012,24 @@ AC_SUBST(LINKCC)
 AC_MSG_CHECKING(LINKCC)
 if test -z "$LINKCC"
 then
-	LINKCC='$(PURIFY) $(MAINCC)'
-	case $ac_sys_system in
-	AIX*)
-	   exp_extra="\"\""
-	   if test $ac_sys_release -ge 5 -o \
-		   $ac_sys_release -eq 4 -a `uname -r` -ge 2 ; then
-	       exp_extra="."
-	   fi
-	   LINKCC="\$(srcdir)/Modules/makexp_aix Modules/python.exp $exp_extra \$(LIBRARY); $LINKCC";;
-	QNX*)
-	   # qcc must be used because the other compilers do not
-	   # support -N.
-	   LINKCC=qcc;;
-	esac
+    if test "$ac_sys_system" == "VxWorks" ; then
+        LINKCC="$LD"
+    else
+        LINKCC='$(PURIFY) $(MAINCC)'
+        case $ac_sys_system in
+        AIX*)
+           exp_extra="\"\""
+           if test $ac_sys_release -ge 5 -o \
+               $ac_sys_release -eq 4 -a `uname -r` -ge 2 ; then
+               exp_extra="."
+           fi
+           LINKCC="\$(srcdir)/Modules/makexp_aix Modules/python.exp $exp_extra \$(LIBRARY); $LINKCC";;
+        QNX*)
+           # qcc must be used because the other compilers do not
+           # support -N.
+           LINKCC=qcc;;
+        esac
+    fi
 fi
 AC_MSG_RESULT($LINKCC)
 
