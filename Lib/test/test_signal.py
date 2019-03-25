@@ -179,8 +179,9 @@ class WakeupFDTests(unittest.TestCase):
 
         signal.set_wakeup_fd(w1)
         self.assertEqual(signal.set_wakeup_fd(w2), w1)
-        self.assertEqual(signal.set_wakeup_fd(-1), w2)
-        self.assertEqual(signal.set_wakeup_fd(-1), -1)
+        if sys.platform != "vxworks":
+            self.assertEqual(signal.set_wakeup_fd(-1), w2)
+            self.assertEqual(signal.set_wakeup_fd(-1), -1)
 
     def test_set_wakeup_fd_socket_result(self):
         sock1 = socket.socket()
@@ -195,8 +196,9 @@ class WakeupFDTests(unittest.TestCase):
 
         signal.set_wakeup_fd(fd1)
         self.assertEqual(signal.set_wakeup_fd(fd2), fd1)
-        self.assertEqual(signal.set_wakeup_fd(-1), fd2)
-        self.assertEqual(signal.set_wakeup_fd(-1), -1)
+        if sys.platform != "vxworks":
+            self.assertEqual(signal.set_wakeup_fd(-1), fd2)
+            self.assertEqual(signal.set_wakeup_fd(-1), -1)
 
     # On Windows, files are always blocking and Windows does not provide a
     # function to test if a socket is in non-blocking mode.
@@ -518,17 +520,25 @@ class WakeupSocketSignalTests(unittest.TestCase):
         else:
             write.setblocking(False)
 
-        # Start with large chunk size to reduce the
-        # number of send needed to fill the buffer.
         written = 0
-        for chunk_size in (2 ** 16, 2 ** 8, 1):
-            chunk = b"x" * chunk_size
+        if sys.platform == "vxworks":
             try:
                 while True:
-                    write.send(chunk)
-                    written += chunk_size
-            except (BlockingIOError, socket.timeout):
+                    write.send(b"x")
+                    written += 1
+            except BlockingIOError:
                 pass
+        else:
+            # Start with large chunk size to reduce the
+            # number of send needed to fill the buffer.
+            for chunk_size in (2 ** 16, 2 ** 8, 1):
+                chunk = b"x" * chunk_size
+                try:
+                    while True:
+                        write.send(chunk)
+                        written += chunk_size
+                except (BlockingIOError, socket.timeout):
+                    pass
 
         print(f"%s bytes written into the socketpair" % written, flush=True)
 
@@ -594,6 +604,7 @@ class WakeupSocketSignalTests(unittest.TestCase):
 
 
 @unittest.skipIf(sys.platform == "win32", "Not valid on Windows")
+@unittest.skipUnless(hasattr(signal, 'siginterrupt'), "don't support siginterrupt")
 class SiginterruptTest(unittest.TestCase):
 
     def readpipe_interrupted(self, interrupt):
@@ -679,6 +690,8 @@ class SiginterruptTest(unittest.TestCase):
 
 
 @unittest.skipIf(sys.platform == "win32", "Not valid on Windows")
+@unittest.skipUnless(hasattr(signal, 'getitimer') and hasattr(signal, 'setitimer'),
+                         "don't support getitimer and setitimer")
 class ItimerTest(unittest.TestCase):
     def setUp(self):
         self.hndl_called = False
