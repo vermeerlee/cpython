@@ -1,4 +1,5 @@
 import os
+import sys
 import posixpath
 import unittest
 import warnings
@@ -260,6 +261,8 @@ class PosixPathTest(unittest.TestCase):
                     self.assertEqual(posixpath.expanduser("~/"), "/")
                     self.assertEqual(posixpath.expanduser("~/foo"), "/foo")
 
+    @unittest.skipIf(sys.platform == "vxworks",
+                     "pwd module does not support getpwuid().pw_dir on VxWorks")
     def test_expanduser_pwd(self):
         pwd = support.import_module('pwd')
 
