@@ -682,6 +682,7 @@ class TestCopyTree(BaseTest, unittest.TestCase):
     # Issue #3002: copyfile and copytree block indefinitely on named pipes
     @unittest.skipUnless(hasattr(os, "mkfifo"), 'requires os.mkfifo()')
     @support.skip_unless_symlink
+    @support.skip_if_restricted_mkfifo
     def test_copytree_named_pipe(self):
         os.mkdir(TESTFN)
         try:
@@ -1205,6 +1206,7 @@ class TestCopy(BaseTest, unittest.TestCase):
 
     # Issue #3002: copyfile and copytree block indefinitely on named pipes
     @unittest.skipUnless(hasattr(os, "mkfifo"), 'requires os.mkfifo()')
+    @support.skip_if_restricted_mkfifo
     def test_copyfile_named_pipe(self):
         try:
             os.mkfifo(TESTFN)
