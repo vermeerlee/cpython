@@ -308,7 +308,10 @@ if sys.platform != 'win32':
         'spawn': SpawnContext(),
         'forkserver': ForkServerContext(),
     }
-    _default_context = DefaultContext(_concrete_contexts['fork'])
+    if sys.platform == 'vxworks':
+        _default_context = DefaultContext(_concrete_contexts['spawn'])
+    else:
+        _default_context = DefaultContext(_concrete_contexts['fork'])
 
 else:
 
