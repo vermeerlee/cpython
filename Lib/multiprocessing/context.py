@@ -253,7 +253,7 @@ class DefaultContext(BaseContext):
         return self._actual_context._name
 
     def get_all_start_methods(self):
-        if sys.platform == 'win32':
+        if sys.platform == 'win32' or sys.platform == 'vxworks':
             return ['spawn']
         else:
             if reduction.HAVE_SEND_HANDLE:
@@ -265,7 +265,7 @@ class DefaultContext(BaseContext):
 # Context types for fixed start method
 #
 
-if sys.platform != 'win32':
+if sys.platform != 'win32' and sys.platform != 'vxworks':
 
     class ForkProcess(process.BaseProcess):
         _start_method = 'fork'
@@ -308,10 +308,7 @@ if sys.platform != 'win32':
         'spawn': SpawnContext(),
         'forkserver': ForkServerContext(),
     }
-    if sys.platform == 'vxworks':
-        _default_context = DefaultContext(_concrete_contexts['spawn'])
-    else:
-        _default_context = DefaultContext(_concrete_contexts['fork'])
+    _default_context = DefaultContext(_concrete_contexts['fork'])
 
 else:
 
@@ -319,7 +316,10 @@ else:
         _start_method = 'spawn'
         @staticmethod
         def _Popen(process_obj):
-            from .popen_spawn_win32 import Popen
+            if sys.platform == 'vxworks':
+                from .popen_spawn_posix import Popen
+            else:
+                from .popen_spawn_win32 import Popen
             return Popen(process_obj)
 
     class SpawnContext(BaseContext):
