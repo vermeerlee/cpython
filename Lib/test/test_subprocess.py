@@ -2012,7 +2012,7 @@ class POSIXProcessTestCase(BaseTestCase):
         _, stderr = p.communicate()
         # VxWorks maybe returned OSError 'EDOOM', it is not bug
         if sys.platform != 'vxworks':
-           self.assertStderrEqual(stderr, b'')
+            self.assertStderrEqual(stderr, b'')
         self.assertEqual(p.wait(), -signal.SIGKILL)
 
     def test_terminate(self):
@@ -2020,7 +2020,7 @@ class POSIXProcessTestCase(BaseTestCase):
         _, stderr = p.communicate()
         # VxWorks maybe returned OSError 'EDOOM', it is not bug
         if sys.platform != 'vxworks':
-           self.assertStderrEqual(stderr, b'')
+            self.assertStderrEqual(stderr, b'')
         self.assertEqual(p.wait(), -signal.SIGTERM)
 
     def test_send_signal_dead(self):
@@ -2327,10 +2327,10 @@ class POSIXProcessTestCase(BaseTestCase):
         self.assertEqual(exitcode, 0)
 
         if sys.platform != "vxworks":
-           # absolute bytes path as a string
-           cmd = b"'" + abs_program + b"' -c pass"
-           exitcode = subprocess.call(cmd, shell=True)
-           self.assertEqual(exitcode, 0)
+            # absolute bytes path as a string
+            cmd = b"'" + abs_program + b"' -c pass"
+            exitcode = subprocess.call(cmd, shell=True)
+            self.assertEqual(exitcode, 0)
 
         # bytes program, unicode PATH
         env = os.environ.copy()
