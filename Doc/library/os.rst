@@ -32,6 +32,7 @@ Notes on the availability of these functions:
   objects, and result in an object of the same type, if a path or file name is
   returned.
 
+* On VxWorks, os.popen is not supported.
 
 .. note::
 
