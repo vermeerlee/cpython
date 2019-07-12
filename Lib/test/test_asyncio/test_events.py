@@ -22,7 +22,7 @@ import unittest
 from unittest import mock
 import weakref
 
-if sys.platform != 'win32':
+if sys.platform != 'win32' and sys.platform != 'vxworks':
     import tty
 
 import asyncio
@@ -467,6 +467,7 @@ class EventLoopTestsMixin:
         self.assertFalse(self.loop.remove_signal_handler(signal.SIGINT))
 
     @unittest.skipUnless(hasattr(signal, 'SIGALRM'), 'No SIGALRM')
+    @unittest.skipUnless(hasattr(signal, 'setitimer'), 'test needs signal.setitimer()')
     def test_signal_handling_while_selecting(self):
         # Test with a signal actually arriving during a select() call.
         caught = 0
@@ -484,6 +485,7 @@ class EventLoopTestsMixin:
         self.assertEqual(caught, 1)
 
     @unittest.skipUnless(hasattr(signal, 'SIGALRM'), 'No SIGALRM')
+    @unittest.skipUnless(hasattr(signal, 'setitimer'), 'test needs signal.setitimer()')
     def test_signal_handling_args(self):
         some_args = (42,)
         caught = 0
@@ -1371,6 +1373,7 @@ class EventLoopTestsMixin:
 
     @unittest.skipUnless(sys.platform != 'win32',
                          "Don't support pipes for Windows")
+    @unittest.skipIf(sys.platform == 'vxworks', "Don't support openpty")
     def test_read_pty_output(self):
         proto = MyReadPipeProto(loop=self.loop)
 
@@ -1468,6 +1471,7 @@ class EventLoopTestsMixin:
 
     @unittest.skipUnless(sys.platform != 'win32',
                          "Don't support pipes for Windows")
+    @unittest.skipIf(sys.platform == 'vxworks', "Don't support openpty")
     # select, poll and kqueue don't support character devices (PTY) on Mac OS X
     # older than 10.6 (Snow Leopard)
     @support.requires_mac_ver(10, 6)
@@ -1512,6 +1516,7 @@ class EventLoopTestsMixin:
 
     @unittest.skipUnless(sys.platform != 'win32',
                          "Don't support pipes for Windows")
+    @unittest.skipIf(sys.platform == "vxworks", "Don't support openpty")
     # select, poll and kqueue don't support character devices (PTY) on Mac OS X
     # older than 10.6 (Snow Leopard)
     @support.requires_mac_ver(10, 6)
@@ -1780,6 +1785,7 @@ class SubprocessTestsMixin:
             self.loop.run_until_complete(proto.completed)
             self.check_killed(proto.returncode)
 
+    @unittest.skipIf(sys.platform == 'vxworks', "shell is not supported on VxWorks")
     def test_subprocess_shell(self):
         with self.assertWarns(DeprecationWarning):
             connect = self.loop.subprocess_shell(
@@ -1797,6 +1803,7 @@ class SubprocessTestsMixin:
             self.assertEqual(proto.data[2], b'')
             transp.close()
 
+    @unittest.skipIf(sys.platform == 'vxworks', "shell is not supported on VxWorks")
     def test_subprocess_exitcode(self):
         connect = self.loop.subprocess_shell(
                         functools.partial(MySubprocessProtocol, self.loop),
@@ -1809,6 +1816,7 @@ class SubprocessTestsMixin:
         self.assertEqual(7, proto.returncode)
         transp.close()
 
+    @unittest.skipIf(sys.platform == 'vxworks', "shell is not supported on VxWorks")
     def test_subprocess_close_after_finish(self):
         connect = self.loop.subprocess_shell(
                         functools.partial(MySubprocessProtocol, self.loop),
