@@ -12,6 +12,7 @@ import errno
 import os
 import threading
 import time
+import sys
 try:
     import ssl
 except ImportError:
@@ -21,7 +22,11 @@ from unittest import TestCase, skipUnless
 from test import support
 from test.support import HOST, HOSTv6
 
-TIMEOUT = 3
+if sys.platform != "vxworks":
+    TIMEOUT = 3
+else:
+    TIMEOUT = 10
+
 # the dummy data returned by server over the data channel when
 # RETR, LIST, NLST, MLSD commands are issued
 RETR_DATA = 'abcde12345\r\n' * 1000
