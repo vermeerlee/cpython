@@ -635,12 +635,16 @@ class PosixTester(unittest.TestCase):
 
     @unittest.skipUnless(hasattr(posix, 'mkfifo'), "don't have mkfifo()")
     def test_mkfifo(self):
-        support.unlink(support.TESTFN)
+        if sys.platform == "vxworks":
+            fifo_path = os.path.join("/fifos/", support.TESTFN)
+        else:
+            fifo_path = support.TESTFN
+        support.unlink(fifo_path)
         try:
-            posix.mkfifo(support.TESTFN, stat.S_IRUSR | stat.S_IWUSR)
+            posix.mkfifo(fifo_path, stat.S_IRUSR | stat.S_IWUSR)
         except PermissionError as e:
             self.skipTest('posix.mkfifo(): %s' % e)
-        self.assertTrue(stat.S_ISFIFO(posix.stat(support.TESTFN).st_mode))
+        self.assertTrue(stat.S_ISFIFO(posix.stat(fifo_path).st_mode))
 
     @unittest.skipUnless(hasattr(posix, 'mknod') and hasattr(stat, 'S_IFIFO'),
                          "don't have mknod()/S_IFIFO")
