@@ -1,0 +1,1 @@
+Skip netrc module test on VxWorks RTOS.
