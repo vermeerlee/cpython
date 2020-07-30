@@ -2,6 +2,7 @@
 
 from test import support
 from test.support.script_helper import assert_python_ok
+from test.support import unix_shell
 
 # Skip these tests if there is no posix module.
 posix = support.import_module('posix')
@@ -1029,6 +1030,7 @@ class PosixTester(unittest.TestCase):
 
 
     @unittest.skipUnless(hasattr(os, 'getegid'), "test needs os.getegid()")
+    @unittest.skipUnless(unix_shell and os.path.exists(unix_shell), 'requires a shell')
     def test_getgroups(self):
         with os.popen('id -G 2>/dev/null') as idg:
             groups = idg.read().strip()
