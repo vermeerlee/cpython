@@ -14,8 +14,7 @@
 
 This module implements an object-oriented interface to :file:`.netrc` files.
 
-.. availability:: Unix. VxWorks has no user home directory so it doesn't support ftp
-   auto-login. This module is not supported on VxWorks.
+.. availability:: Unix; not supported on VxWorks, that doesn't have home directories
 
 The :class:`~netrc.netrc` class parses and encapsulates the netrc file format used by
 the Unix :program:`ftp` program and other FTP clients.
