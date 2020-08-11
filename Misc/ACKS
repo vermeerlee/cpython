@@ -12,6 +12,7 @@ PS: In the standard Python distribution, this file is encoded in UTF-8
 and the list is in rough alphabetical order by last names.
 
 Aahz
+Erlend Egeberg Aasland
 Edison Abahurire
 Michael Abbott
 Rajiv Abraham
@@ -797,6 +798,7 @@ Geert Jansen
 Jack Jansen
 Hans-Peter Jansen
 Bill Janssen
+Hans Petter Jansson
 Jon Janzen
 Thomas Jarosch
 Juhana Jauhiainen
@@ -881,6 +883,7 @@ Sam Kimbrel
 Tomohiko Kinebuchi
 James King
 W. Trevor King
+Jeffrey Kintscher
 Paul Kippes
 Steve Kirsch
 Sebastian Kirsche
@@ -909,6 +912,7 @@ Vajrasky Kok
 Guido Kollerie
 Jacek Kołodziej
 Jacek Konieczny
+Krzysztof Konopko
 Arkady Koplyarov
 Peter A. Koren
 Марк Коренберг
@@ -1264,6 +1268,7 @@ Richard Oudkerk
 Russel Owen
 Joonas Paalasmaa
 Martin Packman
+Elisha Paine
 Shriphani Palakodety
 Julien Palard
 Aviv Palivoda
@@ -1562,6 +1567,7 @@ Justin Sheehy
 Akash Shende
 Charlie Shepherd
 Bruce Sherwood
+Gregory Shevchenko
 Alexander Shigin
 Pete Shinners
 Michael Shiplett
@@ -1593,6 +1599,7 @@ J. Sipprell
 Ngalim Siregar
 Kragen Sitaker
 Kaartic Sivaraam
+Roman Skurikhin
 Ville Skyttä
 Michael Sloan
 Nick Sloan
@@ -1675,6 +1682,7 @@ Péter Szabó
 John Szakmeister
 Piotr Szczepaniak
 Amir Szekely
+David Szotten
 Maciej Szulik
 Joel Taddei
 Arfrever Frehtes Taifersar Arahesis
@@ -1702,6 +1710,7 @@ Mikhail Terekhov
 Victor Terrón
 Pablo Galindo
 Richard M. Tew
+Srinivas Reddy Thatiparthy
 Tobias Thelen
 Christian Theune
 Févry Thibault
@@ -1861,6 +1870,7 @@ Alex Willmer
 David Wilson
 Geoff Wilson
 Greg V. Wilson
+Huon Wilson
 J Derek Wilson
 Paul Winkler
 Jody Winston
@@ -1905,6 +1915,7 @@ EungJun Yi
 Bob Yodlowski
 Danny Yoo
 Wonsup Yoon
+Andrew York
 Rory Yorke
 George Yoshida
 Kazuhiro Yoshida

@@ -2144,7 +2144,7 @@ with the :class:`Pool` class.
       or by calling :meth:`close` and :meth:`terminate` manually. Failure to do this
       can lead to the process hanging on finalization.
 
-      Note that is **not correct** to rely on the garbage colletor to destroy the pool
+      Note that it is **not correct** to rely on the garbage collector to destroy the pool
       as CPython does not assure that the finalizer of the pool will be called
       (see :meth:`object.__del__` for more information).
 
@@ -2173,7 +2173,8 @@ with the :class:`Pool` class.
 
    .. method:: apply_async(func[, args[, kwds[, callback[, error_callback]]]])
 
-      A variant of the :meth:`apply` method which returns a result object.
+      A variant of the :meth:`apply` method which returns a
+      :class:`~multiprocessing.pool.AsyncResult` object.
 
       If *callback* is specified then it should be a callable which accepts a
       single argument.  When the result becomes ready *callback* is applied to
@@ -2203,7 +2204,8 @@ with the :class:`Pool` class.
 
    .. method:: map_async(func, iterable[, chunksize[, callback[, error_callback]]])
 
-      A variant of the :meth:`.map` method which returns a result object.
+      A variant of the :meth:`.map` method which returns a
+      :class:`~multiprocessing.pool.AsyncResult` object.
 
       If *callback* is specified then it should be a callable which accepts a
       single argument.  When the result becomes ready *callback* is applied to
