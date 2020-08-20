@@ -5622,6 +5622,28 @@ AC_MSG_RESULT(python)
 AC_DEFINE(PY_SSL_DEFAULT_CIPHERS, 1)
 ])
 
+# install test suites or not
+AC_MSG_CHECKING([for --enable-test-suites])
+AC_ARG_ENABLE(test-suites,
+              AS_HELP_STRING([--enable-test-suites], [install test suites or not]))
+INSTALL_TEST_SUITES=yes
+if test "$enable_test_suites" = no; then
+    INSTALL_TEST_SUITES=no
+fi
+AC_SUBST(INSTALL_TEST_SUITES)
+AC_MSG_RESULT($INSTALL_TEST_SUITES)
+
+# install optimized .pyc files or not
+AC_MSG_CHECKING([for --enable-bytecode-optimizations])
+AC_ARG_ENABLE(bytecode-optimizations,
+    AS_HELP_STRING([--enable-bytecode-optimizations], [install optimized .pyc files or not]))
+INSTALL_OPT_PYC=yes
+if test "$enable_bytecode_optimizations" = no; then
+    INSTALL_OPT_PYC=no
+fi
+AC_SUBST(INSTALL_OPT_PYC)
+AC_MSG_RESULT($INSTALL_OPT_PYC)
+
 
 # generate output files
 AC_CONFIG_FILES(Makefile.pre Misc/python.pc Misc/python-embed.pc Misc/python-config.sh)
