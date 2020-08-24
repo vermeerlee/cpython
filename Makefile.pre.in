@@ -1483,15 +1483,15 @@ libinstall:	build_all $(srcdir)/Modules/xxmodule.c
 		-j0 -d $(LIBDEST) -f \
 		-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
 		$(DESTDIR)$(LIBDEST)
-	if test "$(INSTALL_OPT_PYC)" = "yes"; then \
-		-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+	-if test "$(INSTALL_OPT_PYC)" = "yes"; then \
+		PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 			$(PYTHON_FOR_BUILD) -Wi -O $(DESTDIR)$(LIBDEST)/compileall.py \
 			-j0 -d $(LIBDEST) -f \
 			-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
 			$(DESTDIR)$(LIBDEST); \
 	fi
-	if test "$(INSTALL_OPT_PYC)" = "yes"; then \
-		-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+	-if test "$(INSTALL_OPT_PYC)" = "yes"; then \
+		PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 			$(PYTHON_FOR_BUILD) -Wi -OO $(DESTDIR)$(LIBDEST)/compileall.py \
 			-j0 -d $(LIBDEST) -f \
 			-x 'bad_coding|badsyntax|site-packages|lib2to3/tests/data' \
@@ -1501,14 +1501,14 @@ libinstall:	build_all $(srcdir)/Modules/xxmodule.c
 		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
 		-j0 -d $(LIBDEST)/site-packages -f \
 		-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages
-	if test "$(INSTALL_OPT_PYC)" = "yes"; then \
-		-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+	-if test "$(INSTALL_OPT_PYC)" = "yes"; then \
+		PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 			$(PYTHON_FOR_BUILD) -Wi -O $(DESTDIR)$(LIBDEST)/compileall.py \
 			-j0 -d $(LIBDEST)/site-packages -f \
 			-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages; \
 	fi
-	if test "$(INSTALL_OPT_PYC)" = "yes"; then \
-		-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
+	-if test "$(INSTALL_OPT_PYC)" = "yes"; then \
+		PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 			$(PYTHON_FOR_BUILD) -Wi -OO $(DESTDIR)$(LIBDEST)/compileall.py \
 			-j0 -d $(LIBDEST)/site-packages -f \
 			-x badsyntax $(DESTDIR)$(LIBDEST)/site-packages; \
