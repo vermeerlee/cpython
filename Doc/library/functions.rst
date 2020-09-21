@@ -596,7 +596,7 @@ are always available.  They are listed here in alphabetical order.
    input must conform to the following grammar after leading and trailing
    whitespace characters are removed:
 
-   .. productionlist::
+   .. productionlist:: float
       sign: "+" | "-"
       infinity: "Infinity" | "inf"
       nan: "nan"
@@ -1734,6 +1734,9 @@ are always available.  They are listed here in alphabetical order.
    locals dictionary is only useful for reads since updates to the locals
    dictionary are ignored.
 
+   A :exc:`TypeError` exception is raised if an object is specified but
+   it doesn't have a :attr:`~object.__dict__` attribute (for example, if
+   its class defines the :attr:`~object.__slots__` attribute).
 
 .. function:: zip(*iterables, strict=False)
 
