@@ -30,10 +30,14 @@
 #
 
 
+import random
+import time
+
+RANDSEED = int(time.time())
+random.seed(RANDSEED)
+
 import sys
 import os
-import time
-import random
 from copy import copy
 from collections import defaultdict
 
@@ -181,7 +185,7 @@ def p_as_triple(dec):
     coeff = int(s) if s else 0
 
     if coeff < 0 or coeff >= 2**128:
-        raise ValueError("value out of bounds for a uint128 triple");
+        raise ValueError("value out of bounds for a uint128 triple")
 
     return (sign, coeff, exp)
 
@@ -189,7 +193,7 @@ def p_from_triple(triple):
     sign, coeff, exp = triple
 
     if coeff < 0 or coeff >= 2**128:
-        raise ValueError("value out of bounds for a uint128 triple");
+        raise ValueError("value out of bounds for a uint128 triple")
 
     digits = tuple(int(c) for c in str(coeff))
 
@@ -890,7 +894,7 @@ def verify(t, stat):
         t.presults.append(str(t.rp.real))
 
         ctriple = None
-        if t.funcname not in ['__radd__', '__rmul__']: # see skip handler
+        if str(t.rc) == str(t.rp): # see skip handler
             try:
                 ctriple = c_as_triple(t.rc)
             except ValueError:
@@ -1235,10 +1239,6 @@ if __name__ == '__main__':
         args.single = args.single[0]
 
 
-    randseed = int(time.time())
-    random.seed(randseed)
-
-
     # Set up the testspecs list. A testspec is simply a dictionary
     # that determines the amount of different contexts that 'test_method'
     # will generate.
@@ -1306,9 +1306,9 @@ if __name__ == '__main__':
     if args.multicore:
         q = Queue()
     elif args.single:
-        log("Random seed: %d", randseed)
+        log("Random seed: %d", RANDSEED)
     else:
-        log("\n\nRandom seed: %d\n\n", randseed)
+        log("\n\nRandom seed: %d\n\n", RANDSEED)
 
 
     FOUND_METHOD = False
